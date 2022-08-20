@@ -1,15 +1,27 @@
 const jwt = require('jsonwebtoken');
 
-const verifyToken = async (req, res) => {
+
+const verifyToken = async (req, res, next) => {
     const {token} = req.body;
 
-    if (token){
-        const decode = jwt.verify(token, process.env.JWTSECRET);
-        return res.status(200).json({message: "Logged in", loggedIn: true})
+    if (!token){
+        return res.status(401).json({error: jwt.decode, loggedIn: false})
     }
-    else{
-        return res.status(401).json({message: "Unauthorised Access", loggedIn: false})
-    }
+    jwt.verify(token, process.env.JWTSECRET, (err, decoded) => {
+       if (err && err.name == 'TokenExpiredError'){
+            return res.status(422).json({
+                error: 'Session Timeout. Please sign in again.',
+                expired: true,
+                loggedIn: false
+                })
+        }
+        
+        decoded = req.user;
+        next();
+    
+    });
+
+    
 }
 
 module.exports = verifyToken;

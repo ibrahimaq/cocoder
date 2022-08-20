@@ -19,9 +19,15 @@ const loginUser = async (req, res) => {
     try {
         const user = await User.login(email, password);
         const token = createToken(user._id);
-        res.status(200).json({message: 'logged in successfully', email, name: user.name, id: user._id, token})
+        res.status(200).json({message: 'logged in successfully', 
+            email, 
+            name: user.name, 
+            id: user._id, 
+            token,
+            loggedIn: true
+        })
     } catch (error) {
-        res.json({message: error.message});
+        res.json({message: error.message, loggedIn: false});
     }
 
 }
@@ -70,7 +76,12 @@ const updateUser = async (req,res) => {
     if(!user){
         return res.status(400).json({error: 'Account cannot be found.'})
     } else {
-        return res.status(200).json({message: 'Account has been updated.', user});
+        return res.status(200).json({
+            message: 'Account has been updated.',
+            id: user._id,
+            name: user.name,
+            email: user.email
+        });
     }
     
 }

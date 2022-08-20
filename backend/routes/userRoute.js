@@ -1,21 +1,20 @@
 const express = require('express');
 const router = express.Router();
+const verifyToken = require('../middleware/auth.js');
 
 //controller functions
 const {createUser, loginUser, updateUser} = require('../controllers/userController')
 
 
-//login route
-router.post('/login', loginUser)
-
 
 //signup route
 router.post('/signup', createUser);
 
-//user settings route
-router.post('/delete');
+//login route
+router.post('/login', loginUser)
 
-router.patch('/update/:id', updateUser);
+//update user details
+router.patch('/:id', verifyToken, updateUser);
 
 
 
