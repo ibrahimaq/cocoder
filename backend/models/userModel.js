@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
 });
 
 // static signup = create our own method instead of plain .create() in userController. Adding password hashing etc
-userSchema.statics.signup = async function(name, email, password) {
+userSchema.statics.register = async function(name, email, password) {
 
     //validation
     if(!name || !email || !password){

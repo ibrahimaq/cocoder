@@ -27,7 +27,7 @@ const loginUser = async (req, res) => {
             loggedIn: true
         })
     } catch (error) {
-        res.json({message: error.message, loggedIn: false});
+        res.status(400).json({message: error.message, loggedIn: false});
     }
 
 }
@@ -37,7 +37,7 @@ const createUser = async (req, res) => {
     const {name, email, password} = req.body;
     
     try {
-        const user =  await User.signup(name, email, password);
+        const user =  await User.register(name, email, password);
 
         //create token
         const token = createToken(user._id)

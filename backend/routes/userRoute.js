@@ -8,7 +8,7 @@ const {createUser, loginUser, updateUser} = require('../controllers/userControll
 
 
 //signup route
-router.post('/signup', createUser);
+router.post('/register', createUser);
 
 //login route
 router.post('/login', loginUser)
