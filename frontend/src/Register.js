@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
+import { useUserContext } from "./context/UserContext";
 
 const Register = () => {
+    const navigate = useNavigate();
+
+    const {dispatch} = useUserContext();
 
     const [formData, setFormData] = useState({
         name: '',
@@ -31,6 +35,9 @@ const Register = () => {
                 email: '',
                 password: ''
             })
+            dispatch({type: 'SET_USER', payload: data})
+            dispatch({type: 'SET_LOGGED_IN', payload: true})
+            navigate('/');
         }
         
         if(!response.ok){

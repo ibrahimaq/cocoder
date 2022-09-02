@@ -1,13 +1,21 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import {useUserContext} from './context/UserContext'
+
 
 
 const Login = () => {
+    const navigate = useNavigate();
+
+    const {state, dispatch} = useUserContext();
 
     const [formData, setFormData] = useState({
         email: '',
         password: ''
     })
+
     const [error, setError] = useState(null)
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -28,6 +36,9 @@ const Login = () => {
                 email: '',
                 password: ''
             })
+            dispatch({type: 'SET_USER', payload: data});
+            dispatch({type: 'SET_LOGGED_IN', payload: true});
+            navigate('/');
         }
         
         if(!response.ok){
@@ -41,7 +52,8 @@ const Login = () => {
 
     useEffect(() => {
         console.log(formData);
-    }, [formData])
+        console.log(state)
+    }, [formData, state])
     return ( 
         <>
         <h1>Login Page</h1>
@@ -53,6 +65,7 @@ const Login = () => {
             <button type="submit">Submit</button>
         </form>
         {error && <div>{error}</div>}
+        
         </>
      );
 }
