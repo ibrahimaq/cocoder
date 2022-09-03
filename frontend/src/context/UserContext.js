@@ -1,4 +1,4 @@
-import { createContext, useReducer, useContext } from "react";
+import { createContext, useReducer, useContext, useEffect } from "react";
 
 export const UserContext = createContext();
 
@@ -24,11 +24,17 @@ export const userReducer = (state, action) => {
     }
 }
 
+
+
 export const UserContextProvider = ({children}) => {
     const [state, dispatch] = useReducer(userReducer, {
         user: null,
         isLoggedIn: false,
     });
+
+    useEffect(()=> {
+        localStorage.setItem('devpalUser', JSON.stringify(state))
+    }, [state])
 
     return (
         <UserContext.Provider value={{state, dispatch}}>
