@@ -1,12 +1,13 @@
-import { useState} from "react";
+import { useEffect, useState} from "react";
+import { useNavigate } from "react-router-dom";
 import { useLogin } from "../hooks/useLogin";
-
+import { useAuthcontext } from "../context/AuthContext";
 
 const Login = () => {
+    const navigate = useNavigate();
+    const {user} = useAuthcontext();
     const {login, isLoading, isError} = useLogin();
-    // const navigate = useNavigate();
 
-    // const {dispatch} = useUserContext();
     
 
     const [formData, setFormData] = useState({
@@ -18,9 +19,16 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        await login(formData);
-
+       await login(formData);
+      
+  
     }
+
+    useEffect(() => {
+        if(user){
+            navigate('/')
+        }
+    })
 
     return ( 
         <>

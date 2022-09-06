@@ -34,14 +34,14 @@ const loginUser = async (req, res) => {
 
 // create new user
 const createUser = async (req, res) => {
-    const {name, email, password} = req.body;
+    const {username, email, password} = req.body;
     
     try {
-        const user =  await User.register(name, email, password);
+        const user =  await User.register(username, email, password);
 
         //create token
         const token = createToken(user._id)
-        res.status(200).json({message: 'post succesful', name, email, id: user._id, token})
+        res.status(200).json({message: 'post succesful', username, email, id: user._id, token})
     } catch (error) {
         res.status(400).json({error: error.message});
     }

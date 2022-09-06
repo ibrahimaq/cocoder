@@ -29,7 +29,7 @@ export const useRegister = () => {
         else{
             setIsError(null);
             localStorage.setItem('user', JSON.stringify(data))
-            dispatch({type: 'REGISTER', payload: data})
+            dispatch({type: 'LOGIN', payload: data})
             setIsLoading(false)
         }
 
