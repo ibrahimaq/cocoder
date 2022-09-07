@@ -5,7 +5,7 @@ const { mongoose } = require("mongoose");
 
 const createToken = (_id) => {
     //Mongodb uses _id as id
-   return jwt.sign({_id}, process.env.JWTSECRET, {expiresIn: 60})
+   return jwt.sign({_id}, process.env.JWTSECRET, {expiresIn: 300})
 }
 
 
@@ -68,6 +68,7 @@ const deleteUser = async (req,res) => {
 // update user
 const updateUser = async (req,res) => {
     const {id} = req.params;
+
     if(!mongoose.Types.ObjectId.isValid(id)){
         return res.status(404).json({error: 'No such user!'})
     }
@@ -78,9 +79,8 @@ const updateUser = async (req,res) => {
     } else {
         return res.status(200).json({
             message: 'Account has been updated.',
-            id: user._id,
-            name: user.name,
-            email: user.email
+            
+           
         });
     }
     

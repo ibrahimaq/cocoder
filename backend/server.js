@@ -3,7 +3,9 @@ dotenv.config();
 const express = require('express');
 const mongoose = require('mongoose');
 const userRoute = require('./routes/userRoute');
-const {verifyToken} = require("./middleware/auth");
+const postRoute = require('./routes/postRoute')
+const Post = require('./models/postModel')
+
 const app = express();
 
 app.use(express.json());
@@ -22,9 +24,22 @@ mongoose.connect(process.env.MONGO_URI)
 
 //routes
 app.use('/api/user', userRoute);
+app.use('/api/post', postRoute);
 
-app.get('/', (req,res) => {
-    res.send('hello')
-})
+
+// app.get('/', async (req,res) => {
+
+//     try {
+//         const author = await Post.find({title: 'My First Title'}).populate('author', 'username email')
+     
+//             res.status(200).json({doc: author})
+     
+//     } catch (error) {
+//         res.status(400).json({message: 'not found'})
+//     }
+    
+    
+//     // res.send('hello')
+// })
 
 
