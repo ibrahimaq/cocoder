@@ -1,11 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./App.css";
+// import "./App.css";
+// import './index.css';
 import Navbar from "./components/Navbar";
 
 //Pages
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import CreatePost from "./pages/CreatePost";
 
 function App() {
   return (
@@ -18,6 +20,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
+              <Route path='/post' element={<CreatePost />} />
             </Routes>
           </div>
         </BrowserRouter>

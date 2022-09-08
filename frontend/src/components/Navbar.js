@@ -13,30 +13,20 @@ const Navbar = () => {
   };
 
   return (
-    <header className="navbar">
-      <div className="container">
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-              <Link to="/register">Register</Link>
-            </li>
-          </ul>
-          {user ? (
-            <button onClick={handleClick}>Logout</button>
-          ) : (
-            <>
-              <Link to="/login" style={{marginRight: '1rem'}}>Login</Link>
-              <Link to="/register">Register</Link>
-            </>
-          )}
-        </nav>
-      </div>
+    <header className="bg-slate-200 px-5 py-4 text-lg flex flex-row justify-between z-10">
+      <Link to='/'>Logo</Link>
+        
+        {user ? (
+          <button onClick={handleClick}>Logout</button>
+        ) : (
+          <div className="flex space-x-4">
+            <Link to="/login" className="px-4 py-2 rounded-full">
+              Login
+            </Link>
+            <Link to="/register" className="px-4 py-2 rounded-full bg-emerald-400">Register</Link>
+          </div>
+        )}
+    
     </header>
   );
 };

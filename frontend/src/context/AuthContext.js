@@ -29,7 +29,7 @@ export const AuthContextProvider = ({children}) => {
         //check if user exists in localStorage
         const user = JSON.parse(localStorage.getItem('user'))
         if (user){
-            dispatch({type: 'LOGIN'})
+            dispatch({type: 'LOGIN', payload: user})
         }
 
         }, [])

@@ -1,44 +1,44 @@
-import { createContext, useReducer, useContext, useEffect } from "react";
+// import { createContext, useReducer, useContext, useEffect } from "react";
 
-export const UserContext = createContext();
+// export const UserContext = createContext();
 
-export const useUserContext = () => {
-    const context = useContext(UserContext);
+// export const useUserContext = () => {
+//     const context = useContext(UserContext);
 
-    return context;
-}
+//     return context;
+// }
 
-export const userReducer = (state, action) => {
-    switch (action.type) {
-        case 'SET_USER':
-            return {...state, user: action.payload};
+// export const userReducer = (state, action) => {
+//     switch (action.type) {
+//         case 'SET_USER':
+//             return {...state, user: action.payload};
         
-        // case 'SET_EMAIL':
-        //     return {...state, email: action.payload}
+//         // case 'SET_EMAIL':
+//         //     return {...state, email: action.payload}
         
-        case 'SET_LOGGED_IN':
-            return {...state, isLoggedIn: action.payload}
+//         case 'SET_LOGGED_IN':
+//             return {...state, isLoggedIn: action.payload}
     
-        default:
-            throw new Error('No named action in userReducer');
-    }
-}
+//         default:
+//             throw new Error('No named action in userReducer');
+//     }
+// }
 
 
 
-export const UserContextProvider = ({children}) => {
-    const [state, dispatch] = useReducer(userReducer, {
-        user: null,
-        isLoggedIn: false,
-    });
+// export const UserContextProvider = ({children}) => {
+//     const [state, dispatch] = useReducer(userReducer, {
+//         user: null,
+//         isLoggedIn: false,
+//     });
 
-    useEffect(()=> {
-        localStorage.setItem('devpalUser', JSON.stringify(state))
-    }, [state])
+//     useEffect(()=> {
+//         localStorage.setItem('devpalUser', JSON.stringify(state))
+//     }, [state])
 
-    return (
-        <UserContext.Provider value={{state, dispatch}}>
-            {children}
-        </UserContext.Provider>
-    )
-}
+//     return (
+//         <UserContext.Provider value={{state, dispatch}}>
+//             {children}
+//         </UserContext.Provider>
+//     )
+// }

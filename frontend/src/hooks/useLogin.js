@@ -20,14 +20,21 @@ export const useLogin = () => {
             body: JSON.stringify(formData),
             
         })
-        const data = await response.json();
+        
 
-        if(!response.ok){
-            setIsLoading(false)
-            setIsError(data.error)
+        if(response.status === 500){
+            setIsError('Internal server error')
         }
 
+        if(response.status !==500 && !response.ok){
+            setIsLoading(false)
+            setIsError(true)
+        }
+
+        
+
         if(response.ok){
+            const data = await response.json();
             setIsError(null);
             localStorage.setItem('user', JSON.stringify(data))
             
