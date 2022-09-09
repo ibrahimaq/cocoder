@@ -13,7 +13,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="bg-slate-200 px-5 py-4 text-lg flex flex-row justify-between z-10">
+    <header className="bg-slate-200 px-5 py-4 text-lg flex flex-row align-middle justify-between z-10 sticky">
       <Link to='/'>Logo</Link>
         
         {user ? (

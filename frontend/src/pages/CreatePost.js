@@ -16,19 +16,14 @@ const CreatePost = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await createPost(formData);
-    if (newPost) {
-        console.log('post success')
-      navigate("/");
-    }
   };
 
   useEffect(() => {
-    // console.log(formData)
-    console.log(user);
+    console.log(newPost);
     if(newPost){
         navigate('/')
     }
-  });
+  },[newPost, navigate]);
 
   return (
     <>

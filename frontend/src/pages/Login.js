@@ -21,12 +21,12 @@ const Login = () => {
 
   useEffect(() => {
     if (user) {
-      navigate("/");
+      navigate("/feed");
     }
   });
 
   return (
-    <div className="bg-slate-50 flex flex-col">
+    <div className="flex flex-col">
       <h1 className="text-3xl my-5 mx-auto">Login to your account</h1>
       <form
         onSubmit={(e) => handleSubmit(e)}
@@ -51,9 +51,9 @@ const Login = () => {
         <button
           type="submit"
           disabled={isLoading}
-          className="bg-emerald-300 font-semibold mx-auto px-20 py-2 rounded-md mt-7 "
+          className="bg-emerald-300 font-semibold mx-auto py-2 px-4 sm:px-20 rounded-md mt-7 shadow-md tracking-wide hover:bg-emerald-400 transition duration-300 ease-in-out"
         >
-            {isLoading? 'Loading...' : 'Submit'}
+            {isLoading? 'Loading...' : 'Login'}
     
         </button>
       </form>

@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.btn{
+  @apply py-2 px-4 bg-emerald-300 font-semibold tracking-wide hover:bg-emerald-400 transition ease-in-out shadow-md
+}
+
 
 
 /* body {

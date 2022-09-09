@@ -1,6 +1,15 @@
 const {mongoose} = require('mongoose');
 const Post = require('../models/postModel');
 
+const getAllPosts = async (req,res) => {
+    try {
+        const getPosts = await Post.find().populate('author', 'username').sort('-createdAt')
+        res.status(200).json({getPosts})
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
+}
+
 const createPost = async (req,res) => {
     const {title, body} = req.body;
   
@@ -80,5 +89,5 @@ const deletePost = async (req, res) => {
     }
 }
 
-module.exports = {createPost, deletePost, updatePost};
+module.exports = {createPost, deletePost, updatePost, getAllPosts};
 

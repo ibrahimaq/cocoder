@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useRegister } from "../hooks/useRegister";
+import { useAuthcontext } from "../context/AuthContext";
 
 const Register = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  const {user} = useAuthcontext();
 
   const { register, isError, isLoading } = useRegister();
 
@@ -23,7 +25,11 @@ const Register = () => {
     await register(formData);
   };
 
-  useEffect(()=>{console.log(formData)},[formData])
+  useEffect(() => {
+    if(user){
+      navigate('/feed')
+    }
+  })
 
   return (
     <>
