@@ -1,12 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const verifyToken = require('../middleware/auth.js');
-const {createPost, deletePost, updatePost, getAllPosts} = require('../controllers/postController')
+const {createPost, deletePost, updatePost, getAllPosts, getPost} = require('../controllers/postController')
 
 //get all posts
 router.get('/', getAllPosts)
 
-// create new post
+// get single post --- :id = post id
+router.get('/:id', getPost);
+
+// create new post --- :id = user id
 router.post('/:id', createPost);
 
 // delete post

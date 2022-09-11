@@ -3,16 +3,16 @@ import { useState } from "react"
 export const useGetAllposts = () => {
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(null)
-    const [data, setData] = useState({})
+    const [data, setData] = useState([])
 
     const getPosts = async () => {
         setLoading(true);
         setError(null);
 
         const response = await fetch('/api/post')
-        
+        const data = await response.json();
         if(response.ok){
-            const data = await response.json();
+            
             console.log(data);
             setData(data);
             setLoading(false)

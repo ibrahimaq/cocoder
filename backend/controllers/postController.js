@@ -4,9 +4,24 @@ const Post = require('../models/postModel');
 const getAllPosts = async (req,res) => {
     try {
         const getPosts = await Post.find().populate('author', 'username').sort('-createdAt')
-        res.status(200).json({getPosts})
+        res.status(200).send(getPosts)
     } catch (error) {
         res.status(400).json({error: error.message});
+    }
+}
+
+const getPost = async (req,res) => {
+    const post_id = req.params.id;
+    
+    if(!mongoose.Types.ObjectId.isValid(post_id)){
+        return res.status(404).json({error: 'This post does not exist.'})
+    }
+
+    try {
+        const getPost = await Post.findOne({_id: post_id});
+        res.status(200).send(getPost);
+    } catch (error) {
+        res.status(400).json({error: 'Post could not be found.'})
     }
 }
 
@@ -89,5 +104,5 @@ const deletePost = async (req, res) => {
     }
 }
 
-module.exports = {createPost, deletePost, updatePost, getAllPosts};
+module.exports = {createPost, deletePost, updatePost, getAllPosts, getPost};
 

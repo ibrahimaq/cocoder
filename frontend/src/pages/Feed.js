@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useGetAllposts } from "../hooks/useGetAllPosts";
+
 import moment from "moment";
+import Loading from "../components/states/Loading";
+import Error from "../components/states/Error";
 
 const Feed = () => {
   moment().format();
@@ -13,15 +16,20 @@ const Feed = () => {
   }, []);
 
   return (
-    <div className="pt-5 w-full mx-auto sm:w-4/5">
-      {data.getPosts &&
-        data.getPosts.map((post) => (
+    <div className="pt-5 w-full mx-auto sm:w-4/5 relative">
+      {data &&
+        data.map((post) => (
           <article
             key={post._id}
             className="p-3 mx-3 mb-5 bg-white shadow-md flex flex-col rounded-md"
           >
             <header className="grid grid-cols-4">
-              <h2 className="text-md sm:text-lg col-span-3 font-medium">{post.title}</h2>
+              <Link
+                to={`/posts/${post._id}`}
+                className='className="text-md sm:text-lg col-span-3 font-medium'
+              >
+                <h2>{post.title}</h2>
+              </Link>
               <span className="inline-block text-end text-sm ">
                 {moment(post.createdAt).format("DD MMM YY")}
               </span>
@@ -59,6 +67,8 @@ const Feed = () => {
             </footer>
           </article>
         ))}
+      {loading && <Loading message={"Loading some cool projects..."} />}
+      {error && <Error message={"OoOoPs! We're having some technical issues, try again later."} />}
     </div>
   );
 };
