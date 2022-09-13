@@ -15,6 +15,12 @@ const postSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    categories: {
+      type: [{
+        type: String
+      }],
+      required: true
+    },
     comment_count: {
       type: Number, 
       default: 0

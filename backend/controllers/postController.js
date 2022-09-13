@@ -18,7 +18,7 @@ const getPost = async (req,res) => {
     }
 
     try {
-        const getPost = await Post.findOne({_id: post_id});
+        const getPost = await Post.findOne({_id: post_id}).populate('author', 'username');
         res.status(200).send(getPost);
     } catch (error) {
         res.status(400).json({error: 'Post could not be found.'})
@@ -26,8 +26,8 @@ const getPost = async (req,res) => {
 }
 
 const createPost = async (req,res) => {
-    const {title, body} = req.body;
-  
+    const {title, body, categories} = req.body;
+
     const author_id = req.params.id;
    
     if(!mongoose.Types.ObjectId.isValid(author_id)){
@@ -38,7 +38,8 @@ const createPost = async (req,res) => {
         const post = await Post.create({
             title,
             body,
-            author: author_id
+            author: author_id,
+            categories
         })
         res.status(200).json({message: 'post successful', post})
     } catch (error) {

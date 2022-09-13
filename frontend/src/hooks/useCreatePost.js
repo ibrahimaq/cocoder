@@ -10,7 +10,7 @@ export const useCreatePost = () => {
 
     const {user} = useAuthcontext();
 
-    const createPost = async (formData) => {
+    const createPost = async (body) => {
         console.log('state from useCreatePost: ', user)
         setLoading(true);
         setError(null);
@@ -20,7 +20,7 @@ export const useCreatePost = () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(formData),
+            body: JSON.stringify(body),
         })
         const data = JSON.stringify(response);
 

@@ -10,7 +10,7 @@ const Hero = () => {
         A place to buddy-up and get your project done.
       </p>
       <div className="flex pt-5">
-        <Link to="/feed" className="btn mx-auto rounded-md">
+        <Link to="/feed" className="btn bg-emerald-300 hover:bg-emerald-400 mx-auto rounded-md">
           Take me there{" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"

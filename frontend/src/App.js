@@ -23,7 +23,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/feed" element={<Feed />} />
-            <Route path="/post" element={<CreatePost />} />
+            <Route path="/new-post" element={<CreatePost />} />
             <Route path="/posts/:id" element={<GetPost />} />
           </Routes>
         </div>

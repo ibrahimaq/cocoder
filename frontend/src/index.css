@@ -3,9 +3,12 @@
 @tailwind utilities;
 
 .btn{
-  @apply py-2 px-4 bg-emerald-300 font-semibold tracking-wide hover:bg-emerald-400 transition ease-in-out shadow-md
+  @apply py-2 px-4 font-semibold tracking-wide transition ease-in-out shadow-md
 }
 
+.post-title{
+  @apply text-lg font-medium text-slate-800
+}
 
 
 /* body {
