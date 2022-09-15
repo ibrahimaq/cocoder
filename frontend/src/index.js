@@ -6,14 +6,15 @@ import App from "./App";
 // Context Providers //
 // import { UserContextProvider } from "./context/UserContext";
 import { AuthContextProvider } from "./context/AuthContext";
+import { ErrLoadProvider } from "./context/ErrLoadContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <AuthContextProvider>
-      {/* <UserContextProvider> */}
+      <ErrLoadProvider>
         <App />
-      {/* </UserContextProvider> */}
+      </ErrLoadProvider>
     </AuthContextProvider>
   </React.StrictMode>
 );

@@ -6,27 +6,29 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const EditPost = ({ setEditing, postToEdit }) => {
+const EditPost = ({ setEditing, editing, postToEdit }) => {
   const navigate = useNavigate()
 
-  const { patchPost, error, loading, newPost } = useCreatePost()
+  const { patchPost, error, loading, newPost: updatedPost } = useCreatePost()
 
   useEffect(() => {
-    
-    if (newPost){
-      // const {title, body, categories} = updatedPost.post;
-      localStorage.setItem('updated-post', JSON.stringify({newPost}))
-      setEditing(false)
-      console.log(newPost)
+    if(updatedPost){
+      localStorage.setItem('updated-post', JSON.stringify(updatedPost))
+      console.log(updatedPost)
+      // setEditing(false)
     }
-  },[newPost])
+  }, [updatedPost, setEditing])
 
 
   return (
+    <>
+    {updatedPost && <div className="bg-red-500">{JSON.stringify(updatedPost, null, 2)}</div>}
+    
     <div className="bg-rose-300 ">
       <Form setEditing={setEditing} postToEdit={postToEdit} patchPost={patchPost} loading={loading} />
  
     </div>
+    </>
   );
 };
 

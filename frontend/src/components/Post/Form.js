@@ -44,7 +44,7 @@ const Form = ({ postToEdit, setEditing, createPost, patchPost, loading }) => {
       body: formData.body,
       categories: selectedCategory.map((category) => category.value),
     };
-    console.log(body)
+    // console.log(body)
    
     // if user updating post
     if (postToEdit) {
@@ -72,11 +72,6 @@ const Form = ({ postToEdit, setEditing, createPost, patchPost, loading }) => {
       color: "red",
     }),
   };
-
-  useEffect(() => {
-    
-    console.log("selected category ", selectedCategory);
-  }, [selectedCategory]);
 
   const validateForm = () => {
     if (!formData.title.length > 0 && !formData.body.length > 0) {

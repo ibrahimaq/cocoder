@@ -72,7 +72,7 @@ const updatePost = async (req,res) => {
 
     try {
         const updatePost = await post.updateOne({title, body, categories, edited: true})
-        res.status(200).json(post)
+        res.status(200).json({message: 'post updated successful', title, body, categories})
     } catch (error) {
         res.status(400).json({error: error.message})
     }

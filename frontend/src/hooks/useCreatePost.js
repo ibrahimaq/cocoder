@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useAuthcontext } from "../context/AuthContext"
+import { useErrLoadcontext } from "../context/ErrLoadContext"
 
 
 export const useCreatePost = () => {
@@ -9,12 +10,13 @@ export const useCreatePost = () => {
     const [newPost, setNewPost] = useState(null)
 
     const {user} = useAuthcontext();
+    // const {} = useErrLoadcontext()
 
     const createPost = async (body) => {
         console.log('state from useCreatePost: ', user)
         setLoading(true);
         setError(null);
-        setNewPost(null);
+        
         const response = await fetch(`/api/post/${user.id}`, {
             method: 'POST',
             headers: {
@@ -37,10 +39,10 @@ export const useCreatePost = () => {
     } 
 
     const patchPost = async (body, post_id) => {
-        console.log('state from useCreatePost: ', user)
+        // console.log('state from useCreatePost: ', user)
         setLoading(true);
         setError(null);
-        setNewPost(null);
+      
 
 
         const response = await fetch(`/api/post/${post_id}`, {
@@ -52,6 +54,7 @@ export const useCreatePost = () => {
             
         })
         const data = await response.json();
+       
 
         if(!response.ok){
             setError(data.error);
@@ -59,7 +62,6 @@ export const useCreatePost = () => {
            
         }
         else if(response.ok){
-            console.log(data)
             setNewPost(data);
             setError(false);
             setLoading(false);

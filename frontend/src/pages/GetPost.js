@@ -27,25 +27,31 @@ const GetPost = () => {
   moment().format();
 
 
-  useEffect( () => {
-    const updatedPostFromLocalStorage = JSON.parse(
-      localStorage.getItem("updated-post")
-    );
-    if (updatedPostFromLocalStorage) {
-      setPost(updatedPostFromLocalStorage);
-      console.log("localsto");
-    } else if (!updatedPostFromLocalStorage) {
-      getPost(id);
-      setPost(data)
-      console.log("not in locals");
-    }
+  // useEffect( () => {
+  //   const updatedPostFromLocalStorage = JSON.parse(
+  //     localStorage.getItem("updated-post")
+  //   );
+  //   if (updatedPostFromLocalStorage) {
+  //     setPost(updatedPostFromLocalStorage);
+  //     // setEditing(false)
+  //     console.log("localsto: ", updatedPostFromLocalStorage);
+  //   } else if (!updatedPostFromLocalStorage) {
+  //     getPost(id);
+  //     setPost(data)
+  //     console.log("not in locals");
+  //   }
 
-    return localStorage.removeItem("updated-post");
-  }, [editing]);
+  //   return localStorage.removeItem("updated-post");
+  // }, [editing]);
 
   useEffect(()=> {
-    console.log(post)
-  }, [post])
+    getPost(id);
+    
+  }, [])
+
+  useEffect(() => {
+    console.log('Data from GetPost: ', data)
+  }, [data])
 
  
 
@@ -130,7 +136,7 @@ const GetPost = () => {
           </article>
         </div>
       )}
-      {editing && <EditPost setEditing={setEditing} postToEdit={data} />}
+      {editing && <EditPost setEditing={setEditing} editing={editing} postToEdit={data} />}
 
       {loading && <Loading message={"Loading..."} />}
       {error && (
