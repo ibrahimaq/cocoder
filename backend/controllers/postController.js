@@ -39,7 +39,8 @@ const createPost = async (req,res) => {
             title,
             body,
             author: author_id,
-            categories
+            categories,
+            edited: false
         })
         res.status(200).json({message: 'post successful', post})
     } catch (error) {
@@ -49,9 +50,10 @@ const createPost = async (req,res) => {
 
 const updatePost = async (req,res) => {
     const post_id = req.params.id;
-    const author_id = req.body.user_id;
-    const body = req.body.body;
-    // res.json({body, post_id, author_id})
+    const { title, body, categories } = req.body.updatedPost;
+    const {author_id} = req.body
+    // console.log(title, body, categories, author_id)
+    // res.status(200).json({body: req.body, message: 'post updated successfully'}) 
     if(!mongoose.Types.ObjectId.isValid(post_id)){
         return res.status(404).json({error: 'Incorrect post credentials'})
     }
@@ -69,8 +71,8 @@ const updatePost = async (req,res) => {
     }
 
     try {
-        const updatePost = await post.updateOne({body, edited: true})
-        res.status(200).json({message: 'Post updated successfully', updatedPost: post})
+        const updatePost = await post.updateOne({title, body, categories, edited: true})
+        res.status(200).json(post)
     } catch (error) {
         res.status(400).json({error: error.message})
     }

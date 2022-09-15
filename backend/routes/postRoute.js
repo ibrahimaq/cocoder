@@ -15,6 +15,7 @@ router.post('/:id', createPost);
 // delete post
 router.delete('/:id', deletePost)
 
+// update post --- :id = post id
 router.patch('/:id', updatePost)
 
 
