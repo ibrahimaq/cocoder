@@ -25,6 +25,8 @@ function App() {
             <Route path="/feed" element={<Feed />} />
             <Route path="/new-post" element={<CreatePost />} />
             <Route path="/posts/:id" element={<GetPost />} />
+          
+
           </Routes>
         </div>
         <Footer />

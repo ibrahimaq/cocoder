@@ -14,7 +14,7 @@ export const useGetPost = () => {
     if(response.ok){
         setLoading(false);
         setData(data);
-        console.log(data);
+        // console.log(data);
     }
     else if(!response.ok){
         setLoading(false);
