@@ -1,20 +1,29 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import moment from "moment";
+
+import EditPost from "../components/Post/EditPost";
+
 import Error from "../components/states/Error";
 import Loading from "../components/states/Loading";
 import Success from "../components/states/Success";
+import DeleteModal from "../components/DeleteModal";
+
 import { useGetPost } from "../hooks/useGetPost";
-import moment from "moment";
+import { usePost } from "../hooks/usePost";
 import { useAuthcontext } from "../context/AuthContext";
+
+import { categoryBgColor } from "../components/GetPost/helpers";
+
 import { TrashIcon, PencilSquareIcon } from "@heroicons/react/24/solid";
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
-import { categoryBgColor } from "../components/GetPost/helpers";
-import EditPost from "../components/Post/EditPost";
-import { usePost } from "../hooks/usePost";
+
+
 
 const GetPost = () => {
   const navigate = useNavigate();
   const [post, setPost] = useState({});
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
 
   ////// EDIT FEATURE /////
   const [editing, setEditing] = useState(false);
@@ -88,7 +97,8 @@ const GetPost = () => {
             <header>
               <div className="grid grid-cols-10">
                 <h1 className="post-title col-span-8 ">{data.title}</h1>
-                {data.author._id === user.id && (
+             
+                 {user && data.author._id === user.id ? (
                   <div className="col-span-2 flex flex-col items-end sm:items-start sm:flex-row sm:justify-end">
                     <button
                       onClick={handleEdit}
@@ -98,14 +108,14 @@ const GetPost = () => {
                       <PencilSquareIcon className="w-4 h-4 text-slate-800" />
                     </button>
                     <button
-                      onClick={handleDelete}
+                      onClick={() => setShowDeleteModal(true)}
                       aria-label="delete"
                       className="bg-gray-300 hover:scale-105 p-3 rounded-lg max-w-10 max-h-10 mt-3 sm:mt-0 sm:ml-3 shadow-md"
                     >
                       <TrashIcon className="w-4 h-4 text-red-600 font-bold" />
                     </button>
                   </div>
-                )}
+                ) : null}
               </div>
 
               <span className="text-sm mt-2 text-slate-500">
@@ -150,10 +160,11 @@ const GetPost = () => {
           message={"Oops, we're having some techincal issues. Try again later."}
         />
       )}
-
+      {showDeleteModal && <DeleteModal setShowDeleteModal={setShowDeleteModal} handleDelete={handleDelete} />}
       {deletedMessage && (
         <Success success={"Your post has been successfully deleted."} />
       )}
+
     </>
   );
 };

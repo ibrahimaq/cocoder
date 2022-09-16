@@ -23,7 +23,7 @@ const EditPost = ({ setEditing, editing, postToEdit }) => {
   return (
     <>
     
-    <div className="bg-rose-300 ">
+    <div className="bg-slate-300 border-t-4 border-t-slate-400">
       <Form setEditing={setEditing} postToEdit={postToEdit} patchPost={patchPost} loading={loading} />
  
     </div>
