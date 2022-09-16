@@ -80,7 +80,7 @@ const updatePost = async (req,res) => {
 
 const deletePost = async (req, res) => {
     const post_id = req.params.id;
-    const author_id = req.body.user_id;
+    const {author_id} = req.body; 
 
     if(!mongoose.Types.ObjectId.isValid(post_id)){
         return res.status(404).json({error: 'Incorrect post credentials'})
@@ -95,7 +95,7 @@ const deletePost = async (req, res) => {
         return res.status(404).json({error: 'Post could not be found or does not exist'})
     }
     
-    else if(!post.author.equals(author_id)){
+    else if(!post.author.equals(author_id)){ 
         return res.status(403).json({error: 'Incorrect authorisation credentials'})
     }
 

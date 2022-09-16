@@ -1,23 +1,23 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Error from "../components/states/Error";
 import Loading from "../components/states/Loading";
+import Success from "../components/states/Success";
 import { useGetPost } from "../hooks/useGetPost";
 import moment from "moment";
 import { useAuthcontext } from "../context/AuthContext";
 import { TrashIcon, PencilSquareIcon } from "@heroicons/react/24/solid";
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
-
+import { categoryBgColor } from "../components/GetPost/helpers";
 import EditPost from "../components/Post/EditPost";
+import { usePost } from "../hooks/usePost";
 
 const GetPost = () => {
+  const navigate = useNavigate();
   const [post, setPost] = useState({});
 
   ////// EDIT FEATURE /////
   const [editing, setEditing] = useState(false);
-  const handleEdit = () => {
-    setEditing(!editing);
-  };
 
   const { id } = useParams();
   const { getPost, data, loading, error } = useGetPost();
@@ -26,56 +26,59 @@ const GetPost = () => {
 
   moment().format();
 
+  useEffect(() => {
+    const updatedPostFromLocalStorage = JSON.parse(
+      localStorage.getItem("updated-post")
+    );
+    if (updatedPostFromLocalStorage) {
+      setPost(updatedPostFromLocalStorage);
+      // setEditing(false)
+      console.log("localsto: ", updatedPostFromLocalStorage);
+    } else if (!updatedPostFromLocalStorage) {
+      setPost(data);
+      console.log("not in locals");
+    }
 
-  // useEffect( () => {
-  //   const updatedPostFromLocalStorage = JSON.parse(
-  //     localStorage.getItem("updated-post")
-  //   );
-  //   if (updatedPostFromLocalStorage) {
-  //     setPost(updatedPostFromLocalStorage);
-  //     // setEditing(false)
-  //     console.log("localsto: ", updatedPostFromLocalStorage);
-  //   } else if (!updatedPostFromLocalStorage) {
-  //     getPost(id);
-  //     setPost(data)
-  //     console.log("not in locals");
-  //   }
-
-  //   return localStorage.removeItem("updated-post");
-  // }, [editing]);
-
-  useEffect(()=> {
-    getPost(id);
-    
-  }, [])
+    // return localStorage.removeItem("updated-post");
+  }, [editing]);
 
   useEffect(() => {
-    console.log('Data from GetPost: ', data)
-  }, [data])
+    getPost(id);
+  }, []);
 
- 
+  useEffect(() => {
+    console.log("Data from GetPost: ", data);
+    console.log("post: ", post);
+  }, [data, post]);
 
-  const categoryBgColor = {
-    Frontend: "bg-green-300",
-    Data: "bg-red-300",
-    Backend: "bg-green-500",
-    DevOps: "bg-teal-300",
-    Database: "bg-fuchsia-300",
-    "AI and Machine Learning": "bg-indigo-300",
-    Other: "bg-amber-300",
+  const handleEdit = () => {
+    setEditing(!editing);
   };
 
-  // const navigate = useNavigate()
-  // const handleEdit = () => {
-  //   localStorage.setItem('post', JSON.stringify(data))
-  //   setEditing(true);
-  // }
+  /// Delete Post ///
+  const {
+    deletePost,
+    error: deleteError,
+    loading: deleteLoading,
+    deletedMessage,
+  } = usePost();
 
-  // useEffect(() => {
-  //   if(editing){
-  //     navigate(`/posts/${id}/edit`)
-  //   }
-  // },[editing, navigate, id])
+  const handleDelete = async () => {
+    await deletePost(data._id, data.author._id);
+    console.log("data._id: ", data._id);
+    console.log("author_id: ", data.author._id);
+    
+  };
+
+  useEffect(() => {
+    if(deletedMessage){
+      setTimeout(() => {
+        navigate(-1);
+      }, 2500)
+      
+    }
+    
+  }, [deletedMessage, navigate])
 
   return (
     <>
@@ -95,6 +98,7 @@ const GetPost = () => {
                       <PencilSquareIcon className="w-4 h-4 text-slate-800" />
                     </button>
                     <button
+                      onClick={handleDelete}
                       aria-label="delete"
                       className="bg-gray-300 hover:scale-105 p-3 rounded-lg max-w-10 max-h-10 mt-3 sm:mt-0 sm:ml-3 shadow-md"
                     >
@@ -136,13 +140,19 @@ const GetPost = () => {
           </article>
         </div>
       )}
-      {editing && <EditPost setEditing={setEditing} editing={editing} postToEdit={data} />}
+      {editing && (
+        <EditPost setEditing={setEditing} editing={editing} postToEdit={data} />
+      )}
 
       {loading && <Loading message={"Loading..."} />}
       {error && (
         <Error
           message={"Oops, we're having some techincal issues. Try again later."}
         />
+      )}
+
+      {deletedMessage && (
+        <Success success={"Your post has been successfully deleted."} />
       )}
     </>
   );

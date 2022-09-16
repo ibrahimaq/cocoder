@@ -1,43 +1,43 @@
-import { createContext, useReducer, useContext, useEffect} from 'react'
+// import { createContext, useReducer, useContext, useEffect} from 'react'
 
-export const ErrLoadContext = createContext();
+// export const ErrLoadContext = createContext();
 
-export const useErrLoadcontext = () => {
-    const context = useContext(ErrLoadContext);
+// export const useErrLoadcontext = () => {
+//     const context = useContext(ErrLoadContext);
 
-    return context;
-}
+//     return context;
+// }
 
-export const errLoadReducer = (state, action) => {
-    switch (action.type) {
-        case 'LOADING':
-            return {loading: action.payload}
+// export const errLoadReducer = (state, action) => {
+//     switch (action.type) {
+//         case 'LOADING':
+//             return {loading: action.payload}
         
-        case 'ERROR':
-            return {error: action.payload}
+//         case 'ERROR':
+//             return {error: action.payload}
 
-        default:
-            throw new Error('no such action in authReducer')
-    }
-}
+//         default:
+//             throw new Error('no such action in authReducer')
+//     }
+// }
 
-export const ErrLoadProvider = ({children}) => {
-    const [state, dispatch] = useReducer(errLoadReducer, {
-        error: null,
-        loading: null
-    })
-    console.log('ErrLoadContext State:', state)
-    useEffect(() => {
+// export const ErrLoadProvider = ({children}) => {
+//     const [state, dispatch] = useReducer(errLoadReducer, {
+//         error: null,
+//         loading: null
+//     })
+//     console.log('ErrLoadContext State:', state)
+//     useEffect(() => {
        
-        console.log(state)
-        }, [])
+//         console.log(state)
+//         }, [])
     
    
 
-    return (
-        <ErrLoadContext.Provider value={{...state, dispatch}}>
-            {children}
-        </ErrLoadContext.Provider>
-    )
+//     return (
+//         <ErrLoadContext.Provider value={{...state, dispatch}}>
+//             {children}
+//         </ErrLoadContext.Provider>
+//     )
  
-}
+// }
