@@ -73,6 +73,7 @@ const Form = ({ postToEdit, setEditing, createPost, patchPost, loading }) => {
     }),
   };
 
+
   const validateForm = () => {
     if (!formData.title.length > 0 && !formData.body.length > 0) {
       return true;
