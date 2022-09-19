@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import Select from "react-select";
 import { PaperAirplaneIcon } from "@heroicons/react/20/solid";
 import { convertPostCategoriesfromDbToReactSelectFormat } from "./helpers";
-import { categoryOptions } from "./helpers";
+import { categoryOptions } from "../../utils/utils";
 import ReactMarkdown from "react-markdown";
+import { selectStyle } from "../../utils/utils";
 
 
 
@@ -63,15 +64,7 @@ const Form = ({ postToEdit, setEditing, createPost, patchPost, loading }) => {
 
   const [selectedCategory, setSelectedCategory] = useState([]);
 
-  const style = {
-    control: (base) => ({
-      ...base,
-      border: 0,
-      boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-      padding: 5,
-      color: "red",
-    }),
-  };
+  
 
 
   const validateForm = () => {
@@ -117,7 +110,7 @@ const Form = ({ postToEdit, setEditing, createPost, patchPost, loading }) => {
             options={categoryOptions}
             className="mb-5"
             classNamePrefix="select"
-            styles={style}
+            styles={selectStyle}
           />
 
           <div className="flex justify-end">
