@@ -23,9 +23,6 @@ const Feed = () => {
     getPosts();
   }, []);
 
-  useEffect(() => {
-    console.log(selectedCategory);
-  }, [selectedCategory]);
 
   return (
     <div className="pt-5 px-3 mx-auto flex flex-col md:flex-none md:w-11/12">

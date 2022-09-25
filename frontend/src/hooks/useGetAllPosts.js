@@ -12,8 +12,6 @@ export const useGetAllposts = () => {
         const response = await fetch('/api/post')
         const data = await response.json();
         if(response.ok){
-            
-            console.log(data);
             setData(data);
             setLoading(false)
             setError(false)

@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
+import ReactMarkdown from "react-markdown";
+
 import { PaperAirplaneIcon } from "@heroicons/react/20/solid";
+
 import { convertPostCategoriesfromDbToReactSelectFormat } from "./helpers";
 import { categoryOptions } from "../../utils/utils";
-import ReactMarkdown from "react-markdown";
 import { selectStyle } from "../../utils/utils";
 
+import { usePostContext } from "../../context/PostContext";
 
 
-const Form = ({ postToEdit, setEditing, createPost, patchPost, loading }) => {
+
+const Form = ({createPost, patchPost, loading}) => {
+
+  const {editing, post } = usePostContext();
+  
 
   // initialise state if creating new post
   const [formData, setFormData] = useState({
@@ -18,20 +25,18 @@ const Form = ({ postToEdit, setEditing, createPost, patchPost, loading }) => {
 
   // if user is editing post, initialise form state
   useEffect(() => {
-    if (postToEdit) {
+    if (editing) {
       setSelectedCategory(
-        convertPostCategoriesfromDbToReactSelectFormat(postToEdit.categories)
+        convertPostCategoriesfromDbToReactSelectFormat(post.categories)
       );
+      console.log(post.title)
       setFormData({
-        title: postToEdit.title,
-        body: postToEdit.body,
+        title: post.title,
+        body: post.body,
       });
     }
-    // console.log(formData);
-    // console.log(postToEdit)
   }, []);
 
-  // const { createPost, patchPost, error, loading, newPost } = useCreatePost();
 
   const handlechange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -45,21 +50,21 @@ const Form = ({ postToEdit, setEditing, createPost, patchPost, loading }) => {
       body: formData.body,
       categories: selectedCategory.map((category) => category.value),
     };
-    // console.log(body)
    
     // if user updating post
-    if (postToEdit) {
-      patchPost(body, postToEdit._id)
+    if (editing) {
+      console.log(body, post._id)
+      patchPost(body, post._id)
+      
     } 
-    else if (!postToEdit) {
-      createPost(body);
+    else if (!editing) {
+     createPost(body);
+      
     }
+
   };
 
-  // useEffect(() => {
-  //   console.log(newPost)
-  //   setEditing(false)
-  // }, [newPost])
+
   ////////// LIST BOX /////////
 
   const [selectedCategory, setSelectedCategory] = useState([]);
@@ -76,6 +81,7 @@ const Form = ({ postToEdit, setEditing, createPost, patchPost, loading }) => {
   };
 
   return (
+    <>
     <div className="overflow-y-auto container mx-auto px-3 pt-10 pb-20 md:px-0 flex flex-col md:flex-row space-y-5 md:space-y-0 md:space-x-5">
       <div className="flex flex-col md:w-1/2">
         <h1 className="text-3xl">New Post</h1>
@@ -147,6 +153,9 @@ const Form = ({ postToEdit, setEditing, createPost, patchPost, loading }) => {
         </div>
       </div>
     </div>
+ 
+
+    </>
   );
 };
 

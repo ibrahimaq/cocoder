@@ -41,7 +41,7 @@ const Cards = ({data, selectedCategory}) => {
                   </header>
                   <hr className="my-4" />
                   <footer className="flex flex-row justify-between text-sm font-medium">
-                    <Link to="/posts/:id">
+                    <Link to={`/posts/${post._id}`}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20"

@@ -12,6 +12,9 @@ import Feed from "./pages/Feed";
 import Footer from "./components/Footer";
 import GetPost from "./pages/GetPost";
 
+//Context Providers
+// import { PostContextProvider } from "./context/PostContext";
+
 function App() {
   return (
     <div className="App bg-slate-50 min-h-screen flex flex-col">
@@ -24,9 +27,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/feed" element={<Feed />} />
             <Route path="/new-post" element={<CreatePost />} />
-            <Route path="/posts/:id" element={<GetPost />} />
-          
 
+            <Route path="/posts/:id" element={<GetPost />} />
           </Routes>
         </div>
         <Footer />

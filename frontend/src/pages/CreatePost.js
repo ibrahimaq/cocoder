@@ -1,29 +1,36 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Form from "../components/Post/Form";
+import Error from "../components/states/Error";
+import Success from "../components/states/Success";
 import { usePost } from "../hooks/usePost";
 
 
 
 const CreatePost = () => {
 
-  const { createPost, error, loading, newPost } = usePost();
+  const { createPost, loading, success } = usePost();
 
 
   const navigate = useNavigate();
 
   useEffect(() => {
    
-    if(newPost){
-      navigate('/feed')
+    if(success){
+      setTimeout(() => {
+        navigate('/feed')
+      }, 1500)
+      
     }
   
-  }, [newPost, navigate]);
+  }, [success, navigate]);
 
 
   return (
     <>
-      <Form createPost={createPost} newPost={newPost} loading={loading} />
+      <Form createPost={createPost} loading={loading} />
+      <Success />
+      <Error />
     </>
   );
 };

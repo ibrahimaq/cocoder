@@ -67,12 +67,12 @@ const updatePost = async (req,res) => {
         res.status(400).json({error: 'Post could not be found or does not exist'})
     } 
     else if(!post.author.equals(author_id)){
-        return res.status(403).json({error: 'Incorrect authorisation credentials'})
+        return res.status(403).json({error: 'Incorrect authorisation credentials'}) 
     }
 
     try {
         const updatePost = await post.updateOne({title, body, categories, edited: true})
-        res.status(200).json({message: 'post updated successful', title, body, categories})
+        res.status(200).json({message: 'post updated successful', success: true , title, body, categories, author: {_id: author_id}})
     } catch (error) {
         res.status(400).json({error: error.message})
     }
