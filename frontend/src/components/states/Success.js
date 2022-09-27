@@ -5,12 +5,15 @@ const Success = () => {
   const { success, dispatch } = usePostContext();
 
   useEffect(() => {
-//    setTimeout(() => {
-//       dispatch({ type: "SUCCESS", payload: null });
-//     }, 1500);
+    let timeout;
+    if(success){
+       timeout = setTimeout(() => {
+            dispatch({ type: "SUCCESS", payload: null });
+          }, 1500);
+    }
 
-    return dispatch({ type: "SUCCESS", payload: null });
-  }, []);
+    return () => clearTimeout(timeout);
+  }, [success]);
 
   return (
     <>

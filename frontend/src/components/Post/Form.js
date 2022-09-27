@@ -53,7 +53,6 @@ const Form = ({createPost, patchPost, loading}) => {
    
     // if user updating post
     if (editing) {
-      console.log(body, post._id)
       patchPost(body, post._id)
       
     } 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import ReactMarkdown from "react-markdown";
 import moment from "moment";
@@ -24,11 +24,11 @@ const PostDetails = ({post_id}) => {
   const navigate = useNavigate();
 
   const {user} = useAuthcontext()
-  const {post , editing, dispatch} = usePostContext()
-  const {getPost, deletePost, patchPost, success, error, loading} = usePost();
+  const {post , editing, success, dispatch} = usePostContext()
+  const {getPost, deletePost, patchPost, error, loading} = usePost();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  // const [showErrorModal, setShowErrorModal] = useState(false);
+
 
   
 
@@ -53,7 +53,7 @@ const PostDetails = ({post_id}) => {
 
   useEffect(() => {
     
-    if(success){
+    if(success && success.includes('deleted')){
       setTimeout(() => {
         navigate('/feed')
       }, 2000)
@@ -62,16 +62,13 @@ const PostDetails = ({post_id}) => {
 
 
 
-  
-
-
 
   return (
     <>
   
       {/* <div className='bg-rose-500 p-4 rounded-md absolute'>this is an error</div> */}
       {post && (
-        <article className="mx-3 p-4 mt-5 bg-white shadow-md rounded-md">
+        <article className={`mx-3 p-4 mt-5 bg-white shadow-md rounded-md transition-colors duration-1000 ${success && !success.includes('deleted') && 'bg-yellow-500'}`}>
           <header>
             <div className="grid grid-cols-10">
               <h1 className="post-title col-span-8 ">{post.title}</h1>
