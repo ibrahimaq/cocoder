@@ -3,8 +3,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 
 import ReactMarkdown from "react-markdown";
 import moment from "moment";
-import { TrashIcon, PencilSquareIcon } from "@heroicons/react/24/solid";
-import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 
 import Form from "../Post/Form";
 import DeleteModal from "../DeleteModal";
@@ -17,7 +15,9 @@ import { useAuthcontext } from "../../context/AuthContext";
 
 import { categoryBgColor } from "../../utils/utils";
 import { usePostContext } from "../../context/PostContext";
-
+import CommentIcon from "../../assets/icons/CommentIcon.js";
+import EditIcon from "../../assets/icons/EditIcon";
+import TrashIcon from "../../assets/icons/TrashIcon";
 
 
 const PostDetails = ({post_id}) => {
@@ -70,31 +70,35 @@ const PostDetails = ({post_id}) => {
         <article className={`mx-3 p-4 mt-5 bg-white shadow-md rounded-md transition-colors duration-1000 ${success && !success.includes('deleted') && 'bg-yellow-500'}`}>
           <header>
             <div className="grid grid-cols-10">
-              <h1 className="post-title col-span-8 ">{post.title}</h1>
+              <div className="col-span-8 ">
+              <h1 className="post-title">{post.title}</h1>
+              <span className="text-sm mt-2 text-slate-500">
+              {moment(post.createdAt).fromNow()}
+            </span>
+              </div>
+              
 
               {user && post.author._id === user.id ? (
                 <div className="col-span-2 flex flex-col items-end sm:items-start sm:flex-row sm:justify-end">
                   <button
                     onClick={() => handleEdit(post)}
                     aria-label="edit"
-                    className="bg-gray-300 hover:scale-105 p-3 rounded-lg max-w-10 max-h-10 shadow-md"
+                    className="bg-slate-200 hover:bg-slate-300 shadow-md p-2 rounded-full"
                   >
-                    <PencilSquareIcon className="w-4 h-4 text-slate-800" />
+                    <EditIcon customClass='w-6 h-6 ' />
+                    {/* <PencilSquareIcon className="w-4 h-4 text-slate-800" /> */}
                   </button>
                   <button
                     onClick={() => setShowDeleteModal(true)}
                     aria-label="delete"
-                    className="bg-gray-300 hover:scale-105 p-3 rounded-lg max-w-10 max-h-10 mt-3 sm:mt-0 sm:ml-3 shadow-md"
+                    className="bg-slate-200 hover:bg-slate-300 shadow-md p-2 rounded-full mt-3 sm:mt-0 sm:ml-3"
                   >
-                    <TrashIcon className="w-4 h-4 text-red-600 font-bold" />
+                    <TrashIcon customClass="w-6 h-6" />
                   </button>
                 </div>
               ) : null}
             </div>
 
-            <span className="text-sm mt-2 text-slate-500">
-              {moment(post.createdAt).fromNow()}
-            </span>
             <div className="flex justify-end flex-wrap space-x-3">
               {post.categories.map((category, i) => (
                 <span
@@ -106,11 +110,12 @@ const PostDetails = ({post_id}) => {
               ))}
             </div>
           </header>
+          <hr class="my-4" />
           <ReactMarkdown className="prose">{post.body}</ReactMarkdown>
           <hr className="my-4" />
           <footer className="flex flex-row justify-between">
             <button className="text-sm font-medium">
-              <ChatBubbleLeftRightIcon className="w-6 h-6 inline-block mr-2" />
+              <CommentIcon customClass="w-6 h-6 inline mr-2" />
               Read comments
             </button>
             <div className="text-sm font-medium">
@@ -122,7 +127,7 @@ const PostDetails = ({post_id}) => {
           </footer>
         </article>
       )}
-      {editing && <Form patchPost={patchPost} loading={loading} />}
+      {editing && <Form patchPost={patchPost} loading={loading} createPost={undefined} />}
 
       {showDeleteModal && (
         <DeleteModal handleDelete={handleDelete} setShowDeleteModal={setShowDeleteModal} />
