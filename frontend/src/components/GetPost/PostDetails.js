@@ -43,7 +43,6 @@ const PostDetails = ({post_id}) => {
   const handleDelete = async () => {
     await deletePost(post_id, post.author._id);
   }
-  
 
 
   useEffect(() => {

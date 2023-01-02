@@ -19,7 +19,7 @@ const getPost = async (req,res) => {
 
     try {
         const getPost = await Post.findOne({_id: post_id}).populate('author', 'username');
-        res.status(200).send(getPost);
+        res.status(200).json({post: getPost});
     } catch (error) {
         res.status(400).json({error: 'Post could not be found.'})
     }
@@ -52,6 +52,7 @@ const updatePost = async (req,res) => {
     const post_id = req.params.id;
     const { title, body, categories } = req.body.updatedPost;
     const {author_id} = req.body
+    console.log(body)
     // console.log(title, body, categories, author_id)
     // res.status(200).json({body: req.body, message: 'post updated successfully'}) 
     if(!mongoose.Types.ObjectId.isValid(post_id)){
@@ -64,17 +65,22 @@ const updatePost = async (req,res) => {
 
     const post = await Post.findOne({_id: post_id})
     if(!post){
-        res.status(400).json({error: 'Post could not be found or does not exist'})
+        return res.status(400).json({error: 'Post could not be found or does not exist'})
     } 
     else if(!post.author.equals(author_id)){
         return res.status(403).json({error: 'Incorrect authorisation credentials'}) 
     }
 
+    const filter = {_id: post_id};
+    const update = { title, body, categories, edited: true };
+    const options = { new: true };
+
     try {
-        const updatePost = await post.updateOne({title, body, categories, edited: true})
-        res.status(200).json({message: 'post updated successful', success: true , title, body, categories, _id: post_id, author: {_id: author_id}})
+        const updatePost = await Post.findOneAndUpdate(filter, update, options).populate('author', 'username')
+        res.status(200).json({message: 'post updated successfuly', success: true, post: updatePost})
+        // res.status(200).json({message: 'post updated successful', success: true , title, body, categories, _id: post_id, author: {_id: author_id}})
     } catch (error) {
-        res.status(400).json({error: error.message})
+        res.status(400).json({error: "Sorry, we're having techincal difficulties at the moment. Try again later."})
     }
 }
 

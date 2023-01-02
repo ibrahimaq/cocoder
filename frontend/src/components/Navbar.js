@@ -13,7 +13,8 @@ const Navbar = () => {
   };
 
   return (
-    <header className="bg-slate-200 px-5 py-4 text-lg flex flex-row align-middle justify-between z-10 sticky">
+    <header className="bg-slate-200 sticky">
+      <div className="container !py-5 text-lg flex flex-row align-middle justify-between">
       <Link to='/'>Logo</Link>
         
         {user ? (
@@ -26,7 +27,7 @@ const Navbar = () => {
             <Link to="/register" className="px-4 py-2 rounded-full bg-emerald-400">Register</Link>
           </div>
         )}
-    
+      </div>
     </header>
   );
 };

@@ -25,7 +25,7 @@ const Feed = () => {
 
 
   return (
-    <div className="pt-5 px-3 mx-auto flex flex-col md:flex-none md:w-11/12">
+    <div className="container flex flex-col md:flex-none">
       <div className="md:fixed w-full md:w-80">
         <p className="mb-2 font-medium">Filter by category:</p>
         <SelectFilter

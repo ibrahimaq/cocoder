@@ -49,9 +49,10 @@ export const usePost = () => {
     const response = await fetch(`/api/post/${post_id}`);
     const data = await response.json();
     if (response.ok) {
+      console.log("getPost: ", data)
       setLoading(false);
-      setPost(data);
-      dispatch({ type: "POST", payload: data });
+      setPost(data.post);
+      dispatch({ type: "POST", payload: data.post });
       // console.log(data);
     } else if (!response.ok) {
       setLoading(false);
@@ -78,8 +79,9 @@ export const usePost = () => {
       dispatch({type: 'ERROR', payload: data.error})
       setLoading(false);
     } else if (response.ok) {
-      setPost(data);
-      dispatch({type: 'POST', payload: data})
+      console.log('updatedPost successfully: ', data);
+      setPost(data.post);
+      dispatch({type: 'POST', payload: data.post})
       dispatch({type: 'EDITING', payload: false})
       dispatch({type: 'SUCCESS', payload: 'Post updated'})
       setLoading(false);
